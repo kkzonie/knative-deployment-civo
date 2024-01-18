@@ -6,13 +6,13 @@ metadata:
   namespace: argocd
 spec:
   destination:
-  namespace: nodejs
-  server: 'https://kubernetes.default.svc'
+    namespace: nodejs
+    server: 'https://kubernetes.default.svc'
   source:
-  path: knative
-  repoURL: 'https://github.com/kkzonie/knative-deployment-civo'
-  targetRevision: main
+    path: knative
+    repoURL: 'https://github.com/kkzonie/knative-deployment-civo'
+    targetRevision: deployment
   project: default
   syncPolicy:
-  syncOptions:
-    - CreateNamespace=true
+    syncOptions:
+      - CreateNamespace=true
