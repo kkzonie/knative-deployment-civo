@@ -1,4 +1,4 @@
-name: NodeJS Deployment on Civo using Knative and ArgoCD - v2
+name: NodeJS Deployment on Civo using Knative and ArgoCD - v3
 
 on:
   push:
