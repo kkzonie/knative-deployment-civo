@@ -36,31 +36,20 @@ env:
 URL: https://github.com/mikefarah/yq/releases/download/3.3.4/yq_linux_amd64
 
 run: |
-
-[ -w /usr/local/bin ] && SUDO="" || SUDO=sudo
-
-$SUDO wget $URL
-
-$SUDO mv ./yq_linux_amd64 /usr/local/bin/yq
-
-$SUDO chmod +x /usr/local/bin/yq
-
-- name: Update Knative Service manifest
-
-run: |
-
-yq w -i knative/service.yaml spec.template.metadata.name "${{ secrets.APP_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}"
-
-yq w -i knative/service.yaml spec.template.spec.containers[0].image "docker.io/${{ secrets.DOCKER_USER }}/${{ secrets.APP_NAME }}:${{ github.sha }}"
-
-- name: Commit to GitHub
-
-run: |
-git config --local user.email "action@github.com"
-git config --local user.name "GitHub Action"
-git commit -am "Bump docker tag"
-
-- name: Push changes
+    [ -w /usr/local/bin ] && SUDO="" || SUDO=sudo
+    $SUDO wget $URL
+    $SUDO mv ./yq_linux_amd64 /usr/local/bin/yq
+    $SUDO chmod +x /usr/local/bin/yq
+        - name: Update Knative Service manifest
+        run: |
+            yq w -i knative/service.yaml spec.template.metadata.name "${{ secrets.APP_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}"
+            yq w -i knative/service.yaml spec.template.spec.containers[0].image "docker.io/${{ secrets.DOCKER_USER }}/${{ secrets.APP_NAME }}:${{ github.sha }}"
+        - name: Commit to GitHub
+        run: |
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git commit -am "Bump docker tag"
+        - name: Push changes
 
 uses: ad-m/github-push-action@v0.6.0
 
