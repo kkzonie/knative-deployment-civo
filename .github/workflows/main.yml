@@ -57,7 +57,6 @@ with:
 github_token: ${{ secrets.GITHUB_TOKEN }}
 branch: ${{ github.ref }}
 
-
 argocd-configure:
 
 name: Configure ArgoCD
@@ -72,43 +71,36 @@ steps:
 
 uses: actions/checkout@v2
 
-- name: Install Civo CLI
+name: Install Civo CLI
 
 env:
 
 URL: https://github.com/civo/cli/releases/download/v1.0.32/civo-1.0.32-linux-amd64.tar.gz
 
 run: |
-
-[ -w /usr/local/bin ] && SUDO="" || SUDO=sudo
-
-$SUDO wget $URL
-$SUDO tar -xvf civo-1.0.32-linux-amd64.tar.gz
-$SUDO mv ./civo /usr/local/bin/
-$SUDO chmod +x /usr/local/bin/civo
-
-- name: Authenticate to Civo API
+    [ -w /usr/local/bin ] && SUDO="" || SUDO=sudo
+    $SUDO wget $URL
+    $SUDO tar -xvf civo-1.0.32-linux-amd64.tar.gz
+    $SUDO mv ./civo /usr/local/bin/
+    $SUDO chmod +x /usr/local/bin/civo
+name: Authenticate to Civo API
 
 run: civo apikey add Login_Key ${{ secrets.CIVO_TOKEN }}
 
-- name: Save Civo kubeconfig
+name: Save Civo kubeconfig
 
 run: |
-
-civo region set ${{ secrets.CIVO_REGION }}
-civo kubernetes config ${{ secrets.CLUSTER_NAME }} --save
-
-- name: Install Kubectl
+    civo region set ${{ secrets.CIVO_REGION }}
+    civo kubernetes config ${{ secrets.CLUSTER_NAME }} --save
+name: Install Kubectl
 
 uses: azure/setup-kubectl@v3
 
 id: install
-
-- name: Apply ArgoCD manifests on Civo
+name: Apply ArgoCD manifests on Civo
 
 run: |
-
-kubectl apply -f argocd/config.yaml
+    kubectl apply -f argocd/config.yaml
 
 
 # Paste the following only when you opt for the ArgoCD manual-sync-policy:
@@ -127,25 +119,22 @@ steps:
 
 uses: actions/checkout@v2
 
-- name: Install ArgoCD CLI
+name: Install ArgoCD CLI
 
 env:
 
 URL: https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
 
 run: |
+    [ -w /usr/local/bin ] && SUDO="" || SUDO=sudo
+    $SUDO curl --insecure -sSL -o /usr/local/bin/argocd $URL
+    $SUDO chmod +x /usr/local/bin/argocd
 
-[ -w /usr/local/bin ] && SUDO="" || SUDO=sudo
-
-$SUDO curl --insecure -sSL -o /usr/local/bin/argocd $URL
-
-$SUDO chmod +x /usr/local/bin/argocd
-
-- name: ArgoCD CLI login
+name: ArgoCD CLI login
 
 run: argocd login ${{ secrets.ARGOCD_SERVER }} --insecure --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }}
 
-- name: Manual sync
+name: Manual sync
 
 run: argocd app sync ${{ secrets.APP_NAME }}
 
