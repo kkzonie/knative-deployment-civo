@@ -10,7 +10,7 @@ spec:
   server: 'https://kubernetes.default.svc'
   source:
   path: knative
-  repoURL: 'https://github.com/Lucifergene/knative-deployment-civo'
+  repoURL: 'https://github.com/kkzonie/knative-deployment-civo'
   targetRevision: main
   project: default
   syncPolicy:
