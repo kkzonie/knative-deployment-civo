@@ -1,4 +1,3 @@
----
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
@@ -8,11 +7,11 @@ spec:
   template:
     metadata:
       creationTimestamp: null
-      name: knative-deployment-civo-2989134890-1
+      name: Container Image Name (knative-deployment-civo)-7575884177-2
     spec:
       containerConcurrency: 0
       containers:
-        - image: docker.io/avik6028/knative-deployment-civo:49680db6549226af62fb3ebee1e96687e7dd1388
+        - image: docker.io/kkzonie/Container Image Name (knative-deployment-civo):8ad36926da2ae0b07b02eaa21f7f4d442873d91d
           name: user-container
           ports:
             - containerPort: 1337
