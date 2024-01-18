@@ -2,7 +2,7 @@ name: NodeJS Deployment on Civo using Knative and ArgoCD
 
 on:
   push:
-    branches: [deployment]
+    branches: [main]
 
 jobs:    
   build-publish:
