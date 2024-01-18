@@ -10,12 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build and push Docker image
-        uses: docker/build-push-action@v1.1.0
+        uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ format('{0}/{1}', secrets.DOCKER_USER, secrets.APP_NAME )}}
-          run: echo ${{ format('{0}/{1}', secrets.DOCKER_USER, secrets.APP_NAME )}}
           tags: ${{ github.sha }}, latest
 
   bump-docker-tag:
