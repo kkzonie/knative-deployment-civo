@@ -14,7 +14,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ format('{0}/{1}', secrets.DOCKER_USER, secrets.APP_NAME )}}
+          #repository: ${{ format('{0}/{1}', secrets.DOCKER_USER, secrets.APP_NAME )}}
+          repository: kkzonie/knative-deployment-civo
           tags: ${{ github.sha }}, latest
 
   bump-docker-tag:
